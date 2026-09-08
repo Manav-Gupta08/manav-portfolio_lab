@@ -21,7 +21,7 @@ const About: React.FC = () => {
     <section id="about" className={styles.aboutSection}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <span className="text-magenta font-header" style={{ fontSize: '1.2rem', letterSpacing: '0.2em' }}>
+          <span className="text-cyan font-header" style={{ fontSize: '1.2rem', letterSpacing: '0.2em' }}>
             // SYS.ABOUT
           </span>
           <h2 className={styles.sectionTitle}>CORE_IDENTITY</h2>

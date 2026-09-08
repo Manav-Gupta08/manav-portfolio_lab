@@ -209,21 +209,3 @@ a {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
-/* The Flat Net Background */
-.net-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image:
-    linear-gradient(var(--grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: -15;
-  /* In front of MatrixRain (-20) */
-  pointer-events: none;
-  opacity: 0.8;
-  /* Ensure it is extremely visible */
-}

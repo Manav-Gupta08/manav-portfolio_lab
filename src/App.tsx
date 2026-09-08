@@ -3,8 +3,8 @@ import Hero from './components/Hero';
 import About from './components/About';
 import ProjectList from './components/ProjectList';
 import Skills from './components/Skills';
-import MatrixRain from './components/MatrixRain';
 import CRTOverlay from './components/CRTOverlay';
+import SubtleBackground from './components/SubtleBackground';
 import styles from './App.module.css';
 
 function App() {
@@ -20,9 +20,8 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <div className="net-background"></div>
+      <SubtleBackground />
       <CRTOverlay />
-      <MatrixRain />
       
       {/* Navigation / Header */}
       <nav className={`glass-panel ${styles.nav}`}>

@@ -1,0 +1,110 @@
+.backgroundContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Changed from -5 to 0 so it actually renders */
+  background-color: var(--bg-deep);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Base structural grid - faint but visible */
+.gridLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Using reliable linear-gradient syntax and background-size */
+  background-image: 
+    linear-gradient(rgba(0, 150, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 150, 255, 0.15) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Primary thick lines for hierarchy */
+.gridLayer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 150, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 150, 255, 0.25) 1px, transparent 1px);
+  background-size: 250px 250px;
+}
+
+/* Interactive light field revealing slightly more grid */
+.lightReveal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.3) 1px, transparent 1px);
+  background-size: 50px 50px;
+  
+  /* Mask it so it only shows around the cursor */
+  mask-image: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+
+.lightReveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.6) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.6) 1px, transparent 1px);
+  background-size: 250px 250px;
+}
+
+/* Subtle texture to prevent pure flat black */
+.noiseLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Vignette and radial focus */
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 40%, transparent 40%, rgba(2, 2, 5, 0.4) 80%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+/* Ambient Dot */
+.ambientDot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: rgba(0, 240, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 240, 255, 0.4);
+  transition: transform 3s linear, opacity 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+/* On touch devices, turn off the light reveal entirely */
+@media (hover: none) and (pointer: coarse) {
+  .lightReveal {
+    display: none;
+  }
+}

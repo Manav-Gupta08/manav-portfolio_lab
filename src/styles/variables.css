@@ -4,7 +4,7 @@
   --bg-panel: rgba(10, 15, 30, 0.4); /* Glassmorphic background */
   
   /* Matrix Grid Color */
-  --grid-color: rgba(0, 240, 255, 0.4);
+  --grid-color: rgba(0, 150, 255, 0.8); /* Brighter Neon Blue */
   
   /* Cyber Colors */
   --neon-cyan: #00f0ff;
@@ -28,8 +28,8 @@
   
   /* Typography */
   --font-display: 'Orbitron', sans-serif;
-  --font-header: 'Rajdhani', sans-serif;
-  --font-body: 'Space Grotesk', sans-serif;
+  --font-header: 'Share Tech Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
 
   /* Spacing */
   --space-1: 0.5rem;

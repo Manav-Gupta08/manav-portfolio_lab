@@ -106,12 +106,12 @@
   font-family: var(--font-header);
   font-size: 1rem;
   letter-spacing: 0.1em;
-  color: var(--text-muted);
+  color: var(--neon-cyan);
   transition: all 0.3s;
 }
 
 .cyberLink:hover {
-  color: var(--neon-cyan);
+  color: #fff;
   text-shadow: var(--glow-cyan);
 }
 

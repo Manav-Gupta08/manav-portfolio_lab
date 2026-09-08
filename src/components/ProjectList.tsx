@@ -7,7 +7,7 @@ const ProjectList: React.FC = () => {
     <section id="projects" className={styles.projectSection}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <span className="text-magenta font-header" style={{ fontSize: '1.2rem', letterSpacing: '0.2em' }}>
+          <span className="text-cyan font-header" style={{ fontSize: '1.2rem', letterSpacing: '0.2em' }}>
             // SYS.PROJECTS
           </span>
           <h2 className={styles.sectionTitle}>DB_QUERY_RESULTS</h2>
