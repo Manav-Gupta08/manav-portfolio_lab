@@ -1,0 +1,135 @@
+.appContainer {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.mainContent {
+  position: relative;
+  z-index: 10;
+}
+
+.nav {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, 94%);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: var(--z-overlay);
+}
+
+.logo {
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLink {
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.navLink:hover {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.themeToggle {
+  background: transparent;
+  border: none;
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--neon-magenta);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-shadow: var(--glow-magenta);
+}
+
+.themeToggle:hover {
+  color: var(--text-main);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Footer */
+.footer {
+  padding: var(--space-4) var(--space-3);
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.footerCard {
+  padding: var(--space-4);
+  text-align: center;
+  border-top: 1px solid rgba(255, 0, 60, 0.4);
+}
+
+.footerCard::before {
+  background: var(--neon-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footerTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text-main);
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.cyberLink {
+  font-family: var(--font-header);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.cyberLink:hover {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+@media (max-width: 900px) {
+  .nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .navLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: var(--space-3) var(--space-2);
+  }
+}

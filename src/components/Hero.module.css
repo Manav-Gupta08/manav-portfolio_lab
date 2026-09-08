@@ -1,0 +1,168 @@
+.heroSection {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 25vh;
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+  padding-bottom: var(--space-4);
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sysStatus {
+  font-family: var(--font-header);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: var(--glow-green);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Glitch Effect */
+.glitchText {
+  position: relative;
+  display: inline-block;
+  color: var(--text-main);
+}
+
+.glitchText::before,
+.glitchText::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitchText::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neon-magenta);
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitchText::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--neon-cyan);
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 86px, 0); }
+  20% { clip: rect(61px, 9999px, 21px, 0); }
+  40% { clip: rect(3px, 9999px, 49px, 0); }
+  60% { clip: rect(98px, 9999px, 88px, 0); }
+  80% { clip: rect(14px, 9999px, 26px, 0); }
+  100% { clip: rect(72px, 9999px, 4px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  20% { clip: rect(4px, 9999px, 35px, 0); }
+  40% { clip: rect(82px, 9999px, 2px, 0); }
+  60% { clip: rect(11px, 9999px, 63px, 0); }
+  80% { clip: rect(96px, 9999px, 19px, 0); }
+  100% { clip: rect(27px, 9999px, 81px, 0); }
+}
+
+.meta {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.roleTag {
+  font-family: var(--font-header);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: var(--neon-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-shadow: var(--glow-cyan);
+}
+
+.tagBracket {
+  color: var(--text-muted);
+  text-shadow: none;
+}
+
+.bio {
+  margin-top: var(--space-3);
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.ctaWrapper {
+  margin-top: var(--space-4);
+}
+
+.cyberBtn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  color: var(--neon-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--neon-cyan);
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2), 0 0 15px rgba(0, 240, 255, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyberBtn:hover {
+  background: rgba(0, 240, 255, 0.3);
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.8);
+  color: #fff;
+  text-shadow: 0 0 5px #fff;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: var(--space-6) var(--space-2) var(--space-4);
+  }
+}

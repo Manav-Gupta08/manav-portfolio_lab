@@ -1,80 +1,229 @@
 @import './variables.css';
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* Important for the infinite canvas concept */
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
-  font-family: var(--font-sans);
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Background Grid Pattern */
-.bg-grid {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-size: 50px 50px;
-  background-image: 
-    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
-  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+/* Matrix grid removed from here, moved to .net-background component class */
+
+/* Base Typography utilities */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-header);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.font-mono {
-  font-family: var(--font-mono);
+.font-display {
+  font-family: var(--font-display);
 }
 
 a {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color var(--trans-fast);
-}
-
-a:hover {
-  color: var(--color-text-primary);
-  text-shadow: 0 0 8px var(--color-accent-glow);
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
   color: inherit;
+  text-decoration: none;
 }
 
-/* Selection */
-::selection {
-  background: var(--color-accent);
-  color: #000;
+/* Cyberpunk Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 4px;
+  /* Sharp corners for cyber aesthetic */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Utility Classes */
-.text-accent {
-  color: var(--color-accent);
+/* Glowing accent line at the top of panels */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
-.text-secondary {
-  color: var(--color-text-secondary);
+.glass-panel:hover::before {
+  opacity: 1;
 }
 
-.text-muted {
-  color: var(--color-text-muted);
+.text-cyan {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.text-magenta {
+  color: var(--neon-magenta);
+  text-shadow: var(--glow-magenta);
+}
+
+.text-green {
+  color: var(--neon-green);
+  text-shadow: var(--glow-green);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-cyan);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-magenta);
+}
+
+/* Utilities */
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.pixel-glitch {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  /* Hide original text so only pseudo-elements show */
+}
+
+.pixel-glitch::before,
+.pixel-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--neon-green);
+  /* The main text color */
+}
+
+.pixel-glitch::before {
+  animation: jitter-top 1.5s infinite linear;
+}
+
+.pixel-glitch::after {
+  animation: jitter-bottom 1.5s infinite linear;
+}
+
+@keyframes jitter-top {
+  0%,
+  75% {
+    transform: translateX(0);
+    text-shadow: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  76% {
+    transform: translateX(4px);
+    text-shadow: -2px 0 var(--neon-magenta);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  }
+
+  88% {
+    transform: translateX(-3px);
+    text-shadow: -2px 0 var(--neon-magenta);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  }
+
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes jitter-bottom {
+  0%,
+  75% {
+    transform: translateX(0);
+    text-shadow: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  76% {
+    transform: translateX(-4px);
+    text-shadow: 2px 0 var(--neon-cyan);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+
+  88% {
+    transform: translateX(3px);
+    text-shadow: 2px 0 var(--neon-cyan);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* The Flat Net Background */
+.net-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -15;
+  /* In front of MatrixRain (-20) */
+  pointer-events: none;
+  opacity: 0.8;
+  /* Ensure it is extremely visible */
 }

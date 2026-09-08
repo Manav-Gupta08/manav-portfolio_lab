@@ -1,0 +1,156 @@
+.projectSection {
+  padding: var(--space-5) var(--space-3);
+  position: relative;
+  z-index: 10;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: clamp(3rem, 6vw, 4rem);
+  color: var(--text-main);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.projectCard {
+  padding: var(--space-4);
+  background: rgba(5, 5, 10, 0.6);
+}
+
+/* Specific hover effect for project cards */
+.projectCard:hover {
+  border-color: rgba(255, 0, 60, 0.8);
+  box-shadow: var(--glow-magenta), var(--glass-shadow);
+}
+
+.cardInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+}
+
+.projectHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tableHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--neon-cyan);
+  border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.projectTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.projectCard:hover .projectTitle {
+  color: var(--neon-magenta);
+  text-shadow: var(--glow-magenta);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--neon-magenta), transparent);
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+
+.projectDesc {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 800px;
+}
+
+.projectFooter {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 60%;
+}
+
+.techTag {
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.projectCard:hover .techTag {
+  color: var(--text-main);
+  text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+.viewBtn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--neon-magenta);
+  color: var(--neon-magenta);
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.projectCard:hover .viewBtn {
+  background: rgba(255, 0, 60, 0.1);
+  box-shadow: inset 0 0 10px rgba(255, 0, 60, 0.2), var(--glow-magenta);
+  color: var(--text-main);
+}
+
+@media (max-width: 768px) {
+  .projectSection {
+    padding: var(--space-4) var(--space-2);
+  }
+  .projectCard {
+    padding: var(--space-3);
+  }
+  .projectFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .techStack {
+    max-width: 100%;
+  }
+}
