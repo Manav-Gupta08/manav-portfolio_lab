@@ -1,0 +1,80 @@
+@import './variables.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Important for the infinite canvas concept */
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+/* Background Grid Pattern */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--trans-fast);
+}
+
+a:hover {
+  color: var(--color-text-primary);
+  text-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent);
+  color: #000;
+}
+
+/* Utility Classes */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
