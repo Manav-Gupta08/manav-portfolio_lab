@@ -9,6 +9,20 @@
   z-index: 10;
 }
 
+/* ── Scroll Progress Bar ── */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+  box-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-green);
+  z-index: calc(var(--z-overlay) + 5);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── Navigation ── */
 .nav {
   position: fixed;
   top: 1.5rem;
@@ -20,6 +34,13 @@
   justify-content: space-between;
   align-items: center;
   z-index: var(--z-overlay);
+  transition: padding 0.3s ease, backdrop-filter 0.3s ease, background 0.3s ease;
+}
+
+.navScrolled {
+  padding: 0.5rem 1.5rem;
+  background: rgba(5, 15, 10, 0.85) !important;
+  backdrop-filter: blur(20px);
 }
 
 .logo {
@@ -37,7 +58,21 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   color: var(--text-muted);
-  transition: all 0.3s;
+  transition: all 0.25s;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan);
+  transition: width 0.25s ease;
 }
 
 .navLink:hover {
@@ -45,26 +80,39 @@
   text-shadow: var(--glow-cyan);
 }
 
+.navLink:hover::after {
+  width: 100%;
+}
+
+.navLinkActive {
+  color: var(--neon-cyan);
+}
+
+.navLinkActive::after {
+  width: 100%;
+  background: var(--neon-cyan);
+}
+
 .themeToggle {
   background: transparent;
   border: none;
   font-family: var(--font-header);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   letter-spacing: 0.1em;
   color: var(--neon-magenta);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.25s;
   text-shadow: var(--glow-magenta);
 }
 
 .themeToggle:hover {
   color: var(--text-main);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-/* Footer */
+/* ── Footer ── */
 .footer {
-  padding: var(--space-4) var(--space-3);
+  padding: var(--space-4) var(--space-3) var(--space-5);
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
@@ -74,7 +122,7 @@
 .footerCard {
   padding: var(--space-4);
   text-align: center;
-  border-top: 1px solid rgba(255, 0, 60, 0.4);
+  border-top: 1px solid rgba(255, 0, 60, 0.3);
 }
 
 .footerCard::before {
@@ -86,28 +134,74 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: 1.2rem;
+}
+
+.footerSignalRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signalDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-magenta);
+  box-shadow: var(--glow-magenta);
+  animation: signalPulse 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes signalPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.5); }
 }
 
 .footerTitle {
   font-size: clamp(2rem, 4vw, 3rem);
   color: var(--text-main);
+  margin: 0;
+}
+
+.footerSubtitle {
+  font-family: var(--font-prose);
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 500px;
 }
 
 .footerLinks {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
+  gap: var(--space-2);
+  margin-top: 0.5rem;
 }
 
 .cyberLink {
   font-family: var(--font-header);
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.1em;
   color: var(--neon-cyan);
-  transition: all 0.3s;
+  transition: all 0.2s ease-out;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.cyberLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--neon-cyan);
+  transition: width 0.2s ease;
 }
 
 .cyberLink:hover {
@@ -115,10 +209,73 @@
   text-shadow: var(--glow-cyan);
 }
 
+.cyberLink:hover::after {
+  width: 100%;
+}
+
+.footerMeta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--font-header);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 1rem;
+  letter-spacing: 0.07em;
+}
+
+/* ── Toast Notifications ── */
+.toastContainer {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.2rem;
+  background: rgba(5, 15, 10, 0.92);
+  border: 1px solid var(--neon-green);
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), 0 4px 16px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-header);
+  font-size: 0.88rem;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+  animation: toastSlideIn 0.3s ease, toastFadeOut 0.4s ease 2.6s forwards;
+  backdrop-filter: blur(10px);
+}
+
+.toastIcon {
+  color: var(--neon-green);
+  font-size: 1rem;
+  text-shadow: var(--glow-green);
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastFadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .nav {
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     padding: 1rem;
   }
   .navLinks {
@@ -131,5 +288,14 @@
 @media (max-width: 768px) {
   .footer {
     padding: var(--space-3) var(--space-2);
+  }
+  .footerMeta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .toastContainer {
+    right: 1rem;
+    bottom: 1rem;
   }
 }

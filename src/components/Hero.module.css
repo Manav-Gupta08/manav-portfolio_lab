@@ -1,15 +1,43 @@
 .heroSection {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 25vh;
+  align-items: center;
+  padding-top: 10vh;
+  padding-bottom: var(--space-4);
   padding-left: var(--space-3);
   padding-right: var(--space-3);
-  padding-bottom: var(--space-4);
   position: relative;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
+  /* NOTE: No perspective here — it would break position:fixed on portal children */
+}
+
+/* Two-column grid */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  width: 100%;
+  padding-top: 8vh;
+}
+
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-top: 12vh;
+  }
+  .heroRight {
+    order: -1; /* Terminal on top on mobile */
+  }
+}
+
+/* ── Left side ── */
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .sysStatus {
@@ -19,7 +47,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .pulse {
@@ -32,25 +60,18 @@
 }
 
 @keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.5); }
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.5; transform: scale(1.8); }
   100% { opacity: 1; transform: scale(1); }
 }
 
-.heroContent {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .title {
-  font-size: clamp(4rem, 12vw, 9rem);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
   line-height: 0.9;
   letter-spacing: 0.05em;
   margin: 0;
   text-transform: uppercase;
+  will-change: transform;
 }
 
 /* Glitch Effect */
@@ -86,25 +107,25 @@
 }
 
 @keyframes glitch-anim {
-  0% { clip: rect(10px, 9999px, 86px, 0); }
-  20% { clip: rect(61px, 9999px, 21px, 0); }
-  40% { clip: rect(3px, 9999px, 49px, 0); }
-  60% { clip: rect(98px, 9999px, 88px, 0); }
-  80% { clip: rect(14px, 9999px, 26px, 0); }
+  0%   { clip: rect(10px, 9999px, 86px, 0); }
+  20%  { clip: rect(61px, 9999px, 21px, 0); }
+  40%  { clip: rect(3px, 9999px, 49px, 0); }
+  60%  { clip: rect(98px, 9999px, 88px, 0); }
+  80%  { clip: rect(14px, 9999px, 26px, 0); }
   100% { clip: rect(72px, 9999px, 4px, 0); }
 }
 
 @keyframes glitch-anim-2 {
-  0% { clip: rect(65px, 9999px, 100px, 0); }
-  20% { clip: rect(4px, 9999px, 35px, 0); }
-  40% { clip: rect(82px, 9999px, 2px, 0); }
-  60% { clip: rect(11px, 9999px, 63px, 0); }
-  80% { clip: rect(96px, 9999px, 19px, 0); }
+  0%   { clip: rect(65px, 9999px, 100px, 0); }
+  20%  { clip: rect(4px, 9999px, 35px, 0); }
+  40%  { clip: rect(82px, 9999px, 2px, 0); }
+  60%  { clip: rect(11px, 9999px, 63px, 0); }
+  80%  { clip: rect(96px, 9999px, 19px, 0); }
   100% { clip: rect(27px, 9999px, 81px, 0); }
 }
 
 .meta {
-  margin-top: var(--space-4);
+  margin-top: 2rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -112,7 +133,7 @@
 
 .roleTag {
   font-family: var(--font-header);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: 0.1em;
   color: var(--neon-cyan);
   display: flex;
@@ -126,43 +147,283 @@
   text-shadow: none;
 }
 
+.typewriterText {
+  min-width: 2ch;
+}
+
+.typeCursor {
+  animation: blink 0.8s step-end infinite;
+  color: var(--neon-cyan);
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 .bio {
-  margin-top: var(--space-3);
-  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
   color: var(--text-muted);
-  max-width: 600px;
-  line-height: 1.6;
+  max-width: 480px;
+  line-height: 1.7;
+  font-family: var(--font-prose);
+}
+
+.funFact {
+  margin-top: 1.2rem;
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  color: var(--neon-magenta);
+  min-height: 1.4em;
 }
 
 .ctaWrapper {
-  margin-top: var(--space-4);
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
 }
 
 .cyberBtn {
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: 0.85rem 1.8rem;
   font-family: var(--font-header);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 0.2em;
   color: var(--neon-cyan);
-  background: rgba(0, 240, 255, 0.1);
+  background: rgba(0, 240, 255, 0.07);
   border: 1px solid var(--neon-cyan);
-  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2), 0 0 15px rgba(0, 240, 255, 0.4);
-  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.12), 0 0 12px rgba(0, 240, 255, 0.25);
+  transition: all 0.25s ease;
   text-transform: uppercase;
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
 
 .cyberBtn:hover {
-  background: rgba(0, 240, 255, 0.3);
-  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.8);
+  background: rgba(0, 240, 255, 0.18);
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.3), 0 0 25px rgba(0, 240, 255, 0.6);
   color: #fff;
-  text-shadow: 0 0 5px #fff;
+  transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-  .heroSection {
-    padding: var(--space-6) var(--space-2) var(--space-4);
-  }
+.cyberBtnSecondary {
+  display: inline-block;
+  padding: 0.85rem 1.8rem;
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: var(--neon-green);
+  background: rgba(0, 255, 65, 0.07);
+  border: 1px solid var(--neon-green);
+  box-shadow: inset 0 0 8px rgba(0, 255, 65, 0.08), 0 0 8px rgba(0, 255, 65, 0.18);
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyberBtnSecondary:hover {
+  background: rgba(0, 255, 65, 0.18);
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.25), 0 0 22px rgba(0, 255, 65, 0.5);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.konamiHint {
+  margin-top: 2rem;
+  font-family: var(--font-header);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── Konami shake ── */
+.konamiActive {
+  animation: konamiShake 0.12s ease-in-out 4;
+}
+
+@keyframes konamiShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+
+/* ── Konami Portal Wrapper ──
+   Full-screen flex container for centering — NO CSS transform.
+   The motion.div (.konamiCard) handles scale/opacity with no conflict. */
+.konamiPortalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.konamiCard {
+  background: rgba(5, 20, 10, 0.96);
+  border: 2px solid var(--neon-green);
+  border-radius: 6px;
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  min-width: 280px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.5), 0 0 60px rgba(0, 255, 65, 0.15), inset 0 0 20px rgba(0, 255, 65, 0.05);
+}
+
+
+.konamiTitle {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--neon-green);
+  text-shadow: var(--glow-green);
+  letter-spacing: 0.15em;
+  animation: konamiGlitch 0.3s ease infinite alternate;
+}
+
+@keyframes konamiGlitch {
+  0%   { text-shadow: var(--glow-green); }
+  100% { text-shadow: 3px 0 var(--neon-magenta), -3px 0 var(--neon-cyan); }
+}
+
+.konamiSub {
+  font-family: var(--font-header);
+  font-size: 1rem;
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+  letter-spacing: 0.2em;
+}
+
+.konamiMsg {
+  font-family: var(--font-prose);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* ── Right Side: Stats Terminal ── */
+.heroRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statTerminal {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(5, 12, 8, 0.80);
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.08), 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+.terminalBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 255, 65, 0.07);
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.terminalDots {
+  display: flex;
+  gap: 5px;
+}
+
+.dotRed    { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.dotYellow { width: 11px; height: 11px; border-radius: 50%; background: #ffbd2e; }
+.dotGreen  { width: 11px; height: 11px; border-radius: 50%; background: #28c840; }
+
+.terminalTitle {
+  font-family: var(--font-header);
+  font-size: 0.78rem;
+  color: var(--neon-green);
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}
+
+.terminalBody {
+  padding: 1.2rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.terminalLine {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-main);
+  padding: 0.15rem 0;
+}
+
+.prompt {
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
+  flex-shrink: 0;
+}
+
+.terminalOutput {
+  color: var(--text-muted);
+  padding: 0.1rem 0 0.1rem 1.2rem;
+}
+
+.jsonBlock {
+  margin: 0.6rem 0 0.6rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.jsonBrace {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.jsonLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.jsonKey {
+  color: var(--neon-cyan);
+}
+
+.jsonColon {
+  color: var(--text-muted);
+}
+
+.jsonVal {
+  color: var(--neon-green);
+}
+
+.jsonComma {
+  color: var(--text-muted);
+}
+
+.cursorBlink {
+  display: inline-block;
+  color: var(--neon-green);
+  animation: blink 1s step-end infinite;
+  font-size: 0.85rem;
+  text-shadow: 0 0 6px var(--neon-green);
 }

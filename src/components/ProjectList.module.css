@@ -14,32 +14,79 @@
 }
 
 .sectionTitle {
-  font-size: clamp(3rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-main);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  margin-top: 0.5rem;
 }
 
+.sectionSubtitle {
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Grid ── */
 .grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
 }
 
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Card ── */
 .projectCard {
-  padding: var(--space-4);
-  background: rgba(5, 5, 10, 0.6);
+  padding: 1.8rem;
+  background: rgba(5, 5, 10, 0.65);
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid var(--card-color, var(--neon-cyan));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Specific hover effect for project cards */
 .projectCard:hover {
-  border-color: rgba(255, 0, 60, 0.8);
-  box-shadow: var(--glow-magenta), var(--glass-shadow);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px var(--card-glow, rgba(0, 240, 255, 0.3)), var(--glass-shadow);
+  border-color: var(--card-color, var(--neon-cyan));
+}
+
+/* Scanline sweep on hover */
+.scanlineEffect {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  transition: top 0s;
+}
+
+.projectCard:hover .scanlineEffect {
+  animation: scanSweep 0.6s ease forwards;
+}
+
+@keyframes scanSweep {
+  0%  { top: -40%; }
+  100%{ top: 130%; }
 }
 
 .cardInner {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 1.2rem;
   height: 100%;
 }
 
@@ -54,89 +101,153 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: var(--font-header);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   letter-spacing: 0.1em;
-  color: var(--neon-cyan);
-  border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+  color: var(--text-muted);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
 
+.typeBadge {
+  font-family: var(--font-header);
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
 .projectTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
-  letter-spacing: 0.05em;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: 0.04em;
   transition: all 0.3s ease;
+  color: var(--text-main);
+  line-height: 1.1;
 }
 
 .projectCard:hover .projectTitle {
-  color: var(--neon-magenta);
-  text-shadow: var(--glow-magenta);
+  color: var(--card-color, var(--neon-cyan));
+  text-shadow: 0 0 15px var(--card-glow, rgba(0, 240, 255, 0.4));
 }
 
 .divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, var(--neon-magenta), transparent);
-  margin: 1rem 0;
+  margin: 0.8rem 0;
   opacity: 0.5;
 }
 
 .projectDesc {
-  font-family: 'Space Grotesk', monospace;
-  font-size: 1rem;
+  font-family: var(--font-prose);
+  font-size: 0.95rem;
   line-height: 1.6;
   color: var(--text-muted);
-  max-width: 800px;
 }
 
+/* ── Full Description ── */
+.fullDesc {
+  overflow: hidden;
+}
+
+.fullDescInner {
+  border-left: 2px solid var(--card-color, var(--neon-cyan));
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+}
+
+.fullDescLabel {
+  display: block;
+  font-family: var(--font-header);
+  font-size: 0.72rem;
+  color: var(--card-color, var(--neon-cyan));
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+}
+
+.fullDescInner p {
+  font-family: var(--font-prose);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ── Footer ── */
 .projectFooter {
   margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: 1rem;
 }
 
 .techStack {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  max-width: 60%;
+  gap: 0.4rem;
+  flex: 1;
 }
 
 .techTag {
   padding: 0;
   background: transparent;
   border: none;
-  color: var(--text-muted);
-  font-family: 'Space Grotesk', monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-prose);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid;
+  border-color: transparent;
+  transition: border-color 0.2s;
 }
 
 .projectCard:hover .techTag {
-  color: var(--text-main);
-  text-shadow: 0 0 5px rgba(255,255,255,0.5);
+  border-color: currentColor;
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .viewBtn {
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.9rem;
   background: transparent;
-  border: 1px solid var(--neon-magenta);
-  color: var(--neon-magenta);
-  font-family: 'Space Grotesk', monospace;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
+  border: 1px solid;
+  font-family: var(--font-header);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  border-radius: 2px;
 }
 
-.projectCard:hover .viewBtn {
-  background: rgba(255, 0, 60, 0.1);
-  box-shadow: inset 0 0 10px rgba(255, 0, 60, 0.2), var(--glow-magenta);
+.viewBtn:hover {
+  opacity: 0.85;
+}
+
+.githubBtn {
+  padding: 0.45rem 0.9rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  font-family: var(--font-header);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.githubBtn:hover {
   color: var(--text-main);
+  border-color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 768px) {
@@ -144,13 +255,10 @@
     padding: var(--space-4) var(--space-2);
   }
   .projectCard {
-    padding: var(--space-3);
+    padding: 1.2rem;
   }
   .projectFooter {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .techStack {
-    max-width: 100%;
   }
 }

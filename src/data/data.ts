@@ -23,14 +23,28 @@ export type SkillData = {
 export const portfolioData = {
   profile: {
     name: "Manav Gupta",
+    role: "Backend Engineer & Security Analyst",
     title: "Computer Science Engineer | Backend & Cybersecurity Enthusiast",
+    bio: "CS undergrad obsessed with how systems work under the hood. I build backends, break into things (legally), and explore the blurry edge between software engineering and security.",
     description: "I'm a Computer Science undergraduate focused on software engineering, backend development, cybersecurity, and problem solving. I enjoy understanding how systems work internally, building practical applications, and exploring areas such as application security and vulnerability analysis. I care about building things that are technically sound rather than simply making them work, and I'm continuously expanding my knowledge across software engineering, systems, and security.",
     email: "manavgupta0808@gmail.com",
     github: "https://github.com/Manav-Gupta08",
     linkedin: "https://linkedin.com/in/manav-gupta-6602b9299",
     leetcode: "https://leetcode.com/u/manav_gupta08/",
-    x: "https://x.com/Manav_Gupta08"
+    x: "https://x.com/Manav_Gupta08",
+    resumeLink: "/Manav_Gupta_resume.pdf",
   },
+
+  hackerQuotes: [
+    "The quieter you become, the more you are able to hear. — Kali Linux motto",
+    "Security is not a product, but a process. — Bruce Schneier",
+    "To learn who rules over you, simply find out who you are not allowed to criticize. — Voltaire",
+    "The best way to predict the future is to invent it. — Alan Kay",
+    "There is no patch for human stupidity. — Kevin Mitnick",
+    "In God we trust. All others we monitor. — NSA",
+    "If you think technology can solve your security problems, then you don't understand the problems. — Bruce Schneier",
+    "The only truly secure system is one that is powered off, cast in a block of concrete and sealed in a lead room. — Gene Spafford",
+  ],
 
   projects: [
     {

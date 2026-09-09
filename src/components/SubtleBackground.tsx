@@ -8,118 +8,131 @@ interface Dot {
   travelX: number;
   travelY: number;
   opacity: number;
+  size: number;
+  color: 'cyan' | 'green' | 'purple';
 }
+
+const DOT_COLORS = ['cyan', 'green', 'green', 'purple'] as const; // Green appears 2x more often
+
+// Green blob approximate screen center (top-left region)
+// Green blob: top:-30% left:-20% → visible center roughly at 10% x, 10% y
+// Purple blob: bottom:-25% right:-15% → visible center roughly at 90% x, 85% y
 
 const SubtleBackground: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dots, setDots] = useState<Dot[]>([]);
 
+  // Mouse tracking: position + color-aware grid reveal
   useEffect(() => {
     let rafId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
-      
-      // Throttle mouse updates via requestAnimationFrame
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          
-          containerRef.current.style.setProperty('--mouse-x', `${x}px`);
-          containerRef.current.style.setProperty('--mouse-y', `${y}px`);
-        }
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        containerRef.current.style.setProperty('--mouse-x', `${mouseX}px`);
+        containerRef.current.style.setProperty('--mouse-y', `${mouseY}px`);
+
+        // ── Color-aware grid reveal ──
+        // Normalize cursor to 0..1
+        const xRatio = mouseX / rect.width;
+        const yRatio = mouseY / rect.height;
+
+        // Distance from cursor to each blob's approximate visible center
+        // Green blob: top-left (~10% x, ~15% y of screen after animation)
+        const distToGreen = Math.sqrt(
+          Math.pow(xRatio - 0.10, 2) + Math.pow(yRatio - 0.15, 2)
+        );
+        // Purple blob: bottom-right (~88% x, ~82% y)
+        const distToPurple = Math.sqrt(
+          Math.pow(xRatio - 0.88, 2) + Math.pow(yRatio - 0.82, 2)
+        );
+
+        // Weight for purple: 0 = pure green, 1 = pure purple
+        const total = distToGreen + distToPurple;
+        const weightPurple = total > 0 ? distToGreen / total : 0;
+
+        // Interpolate: Green=rgb(0,255,65) → Purple=rgb(176,38,255)
+        const r = Math.round(weightPurple * 176);
+        const g = Math.round((1 - weightPurple) * 255 + weightPurple * 38);
+        const b = Math.round((1 - weightPurple) * 65 + weightPurple * 255);
+
+        containerRef.current.style.setProperty('--reveal-r', r.toString());
+        containerRef.current.style.setProperty('--reveal-g', g.toString());
+        containerRef.current.style.setProperty('--reveal-b', b.toString());
       });
     };
 
-    // Only add mouse tracking if hover is supported (ignore on pure touch devices to save perf)
     const mediaQuery = window.matchMedia('(hover: hover)');
     if (mediaQuery.matches) {
       window.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
-
     return () => {
-      if (mediaQuery.matches) {
-        window.removeEventListener('mousemove', handleMouseMove);
-      }
+      if (mediaQuery.matches) window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(rafId);
     };
   }, []);
 
-  // Ambient Dot Logic
+  // Ambient particles — increased count with size variety
   useEffect(() => {
-    let timeoutId: number;
-    let dotIdCounter = 0;
+    let animationFrameId: number;
+    let particleList: Dot[] = [];
 
-    const spawnDot = () => {
-      // Very rare ambient activity - spawn every 3-8 seconds
-      const nextSpawnTime = Math.random() * 5000 + 3000;
-      
-      timeoutId = setTimeout(() => {
-        // Decide if it runs horizontal or vertical along the grid lines
-        const isHorizontal = Math.random() > 0.5;
-        
-        // Grid size is 40px, so we snap to 40px intervals
-        const snap = 40;
-        
-        let startX, startY, travelX, travelY;
+    // 80 particles with random sizes
+    for (let i = 0; i < 80; i++) {
+      particleList.push({
+        id: i,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        travelX: (Math.random() - 0.5) * 0.35,
+        travelY: Math.random() * -0.65 - 0.15,
+        opacity: Math.random() * 0.55 + 0.08,
+        size: Math.random() * 2.5 + 1, // 1px to 3.5px
+        color: DOT_COLORS[Math.floor(Math.random() * DOT_COLORS.length)],
+      });
+    }
+    setDots(particleList);
 
-        if (isHorizontal) {
-          startX = Math.floor((Math.random() * window.innerWidth) / snap) * snap;
-          startY = Math.floor((Math.random() * window.innerHeight) / snap) * snap;
-          travelX = startX + (Math.random() > 0.5 ? 200 : -200);
-          travelY = startY;
-        } else {
-          startX = Math.floor((Math.random() * window.innerWidth) / snap) * snap;
-          startY = Math.floor((Math.random() * window.innerHeight) / snap) * snap;
-          travelX = startX;
-          travelY = startY + (Math.random() > 0.5 ? 200 : -200);
-        }
-
-        const newDot: Dot = {
-          id: dotIdCounter++,
-          x: startX,
-          y: startY,
-          travelX,
-          travelY,
-          opacity: 0
-        };
-
-        setDots(prev => [...prev, newDot]);
-
-        // Animate opacity in and out
-        setTimeout(() => {
-          setDots(prev => prev.map(d => d.id === newDot.id ? { ...d, opacity: 1 } : d));
-        }, 50);
-
-        setTimeout(() => {
-          setDots(prev => prev.map(d => d.id === newDot.id ? { ...d, opacity: 0 } : d));
-        }, 2000);
-
-        // Remove dot after animation
-        setTimeout(() => {
-          setDots(prev => prev.filter(d => d.id !== newDot.id));
-        }, 3000);
-
-        // Queue next spawn
-        spawnDot();
-      }, nextSpawnTime);
+    let lastTime = performance.now();
+    const animate = (time: number) => {
+      const deltaTime = (time - lastTime) / 16.66;
+      lastTime = time;
+      setDots(prev => prev.map(dot => {
+        let newX = dot.x + dot.travelX * deltaTime;
+        let newY = dot.y + dot.travelY * deltaTime;
+        // Wrap around
+        if (newY < -10) newY = window.innerHeight + 10;
+        if (newX < -10) newX = window.innerWidth + 10;
+        if (newX > window.innerWidth + 10) newX = -10;
+        return { ...dot, x: newX, y: newY };
+      }));
+      animationFrameId = requestAnimationFrame(animate);
     };
-
-    spawnDot();
-
-    return () => clearTimeout(timeoutId);
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
   }, []);
+
+  const getDotStyle = (dot: Dot) => {
+    switch (dot.color) {
+      case 'cyan':   return { background: 'rgba(0,240,255,0.75)', boxShadow: `0 0 ${dot.size * 2}px rgba(0,240,255,0.5)` };
+      case 'green':  return { background: 'rgba(0,255,65,0.75)',  boxShadow: `0 0 ${dot.size * 2}px rgba(0,255,65,0.5)` };
+      case 'purple': return { background: 'rgba(176,38,255,0.65)', boxShadow: `0 0 ${dot.size * 2}px rgba(176,38,255,0.4)` };
+    }
+  };
 
   return (
     <div className={styles.backgroundContainer} ref={containerRef}>
       <div className={styles.noiseLayer} />
       <div className={styles.gridLayer} />
+      <div className={styles.auroraLayer} />
       <div className={styles.lightReveal} />
       <div className={styles.vignette} />
-      
+
       {dots.map(dot => (
         <div
           key={dot.id}
@@ -128,7 +141,9 @@ const SubtleBackground: React.FC = () => {
             left: `${dot.x}px`,
             top: `${dot.y}px`,
             opacity: dot.opacity,
-            transform: `translate(${dot.opacity > 0 ? dot.travelX - dot.x : 0}px, ${dot.opacity > 0 ? dot.travelY - dot.y : 0}px)`
+            width: `${dot.size}px`,
+            height: `${dot.size}px`,
+            ...getDotStyle(dot),
           }}
         />
       ))}

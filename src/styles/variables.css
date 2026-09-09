@@ -1,20 +1,28 @@
 :root {
   /* Cyberpunk Backgrounds */
-  --bg-deep: #020205; /* Deepest black/blue */
-  --bg-panel: rgba(10, 15, 30, 0.4); /* Glassmorphic background */
+  --bg-deep: #0d1410;
+  --bg-panel: rgba(10, 20, 15, 0.65);
   
   /* Matrix Grid Color */
-  --grid-color: rgba(0, 150, 255, 0.8); /* Brighter Neon Blue */
+  --grid-color: rgba(0, 255, 65, 0.3);
   
-  /* Cyber Colors */
-  --neon-cyan: #00f0ff;
-  --neon-magenta: #ff003c;
+  /* Cyber Colors - Mixed Palette */
+  --neon-cyan: #00f0ff; 
+  --neon-magenta: #ff003c; 
   --neon-green: #00ff41;
   --neon-purple: #b026ff;
+  --neon-yellow: #f5c518;
+
+  /* Project Type Colors */
+  --type-frontend: #00f0ff;
+  --type-backend: #b026ff;
+  --type-fullstack: #f5c518;
+  --type-system: #00ff41;
+  --type-iot: #ff6b35;
   
   /* Text Colors */
   --text-main: #ffffff;
-  --text-muted: #a0a0b0;
+  --text-muted: #9abfa5;
   
   /* Glassmorphism */
   --glass-border: 1px solid rgba(0, 240, 255, 0.3);
@@ -25,11 +33,13 @@
   --glow-cyan: 0 0 10px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.4);
   --glow-magenta: 0 0 10px rgba(255, 0, 60, 0.8), 0 0 20px rgba(255, 0, 60, 0.4);
   --glow-green: 0 0 10px rgba(0, 255, 65, 0.8), 0 0 20px rgba(0, 255, 65, 0.4);
+  --glow-purple: 0 0 10px rgba(176, 38, 255, 0.8), 0 0 20px rgba(176, 38, 255, 0.4);
   
   /* Typography */
   --font-display: 'Orbitron', sans-serif;
   --font-header: 'Share Tech Mono', monospace;
   --font-body: 'JetBrains Mono', monospace;
+  --font-prose: 'Space Grotesk', sans-serif;
 
   /* Spacing */
   --space-1: 0.5rem;
@@ -37,6 +47,7 @@
   --space-3: 2rem;
   --space-4: 4rem;
   --space-5: 8rem;
+  --space-6: 12rem;
 
   /* Z-index */
   --z-background: -10;
@@ -46,26 +57,26 @@
 
 /* LIGHT THEME (Mirror's Edge Style) */
 .light-theme {
-  --bg-deep: #f4f5f7;
-  --bg-panel: rgba(255, 255, 255, 0.6);
+  --bg-deep: #f0f4f2;
+  --bg-panel: rgba(255, 255, 255, 0.7);
   
   --grid-color: rgba(0, 0, 0, 0.05);
 
   --text-main: #05050a;
-  --text-muted: #4a4a5a;
+  --text-muted: #4a5a50;
   
   --glass-border: 1px solid rgba(0, 0, 0, 0.1);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
   
-  /* Soften the neon glows slightly on white background so they aren't completely washed out */
   --glow-cyan: 0 0 10px rgba(0, 200, 255, 0.5);
   --glow-magenta: 0 0 10px rgba(255, 0, 60, 0.5);
   --glow-green: 0 0 10px rgba(0, 200, 50, 0.5);
+  --glow-purple: 0 0 10px rgba(176, 38, 255, 0.5);
   
-  /* Darken neon colors slightly for text contrast on white */
-  --neon-cyan: #00a0b0;
+  --neon-cyan: #0088aa;
   --neon-magenta: #cc0030;
-  --neon-green: #00992a;
+  --neon-green: #00882a;
+  --neon-purple: #8800cc;
 }
 
 ::selection {

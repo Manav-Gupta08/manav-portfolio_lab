@@ -1,0 +1,429 @@
+.dashboardWrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 7rem auto 4rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.hudContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Responsive collapse */
+@media (max-width: 900px) {
+  .hudContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: rgba(5, 15, 10, 0.75);
+  border: 1px solid var(--neon-green);
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.04), 0 0 10px rgba(0, 255, 65, 0.15);
+  padding: 2rem;
+  position: relative;
+  clip-path: polygon(
+    20px 0, 
+    100% 0, 
+    100% calc(100% - 20px), 
+    calc(100% - 20px) 100%, 
+    0 100%, 
+    0 20px
+  );
+}
+
+/* Fake corner accents */
+.panel::before, .panel::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--neon-green);
+  pointer-events: none;
+}
+.panel::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+.panel::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+.panelHeader {
+  border-bottom: 1px dashed rgba(0, 255, 65, 0.35);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.panelTitle {
+  color: var(--neon-green);
+  font-family: var(--font-header);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: var(--glow-green);
+}
+
+.panelBadge {
+  font-size: 0.75rem;
+  background: rgba(0, 255, 65, 0.12);
+  color: var(--neon-green);
+  padding: 2px 8px;
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  border-radius: 2px;
+  animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── ASCII Avatar ── */
+.asciiWrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.asciiScanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 255, 65, 0.03) 3px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanlineMove 4s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+.asciiArt {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--neon-green);
+  text-shadow: 0 0 4px rgba(0, 255, 65, 0.6);
+  white-space: pre;
+  text-align: center;
+  margin: 0;
+}
+
+.asciiStatus {
+  margin-top: 0.5rem;
+  font-family: var(--font-header);
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.asciiOnline {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neon-green);
+  box-shadow: var(--glow-green);
+  display: inline-block;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+/* ── Info Table ── */
+.infoTable {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+}
+
+.infoTable td {
+  padding: 0.45rem 0;
+  font-size: 0.88rem;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.08);
+}
+
+.infoLabel {
+  color: var(--text-muted);
+  width: 40%;
+  font-family: var(--font-header);
+}
+
+.infoValue {
+  color: var(--text-main);
+  font-family: var(--font-header);
+}
+
+/* ── Live Clock ── */
+.clockWidget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(0, 240, 255, 0.04);
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+
+.clockLabel {
+  font-family: var(--font-header);
+  font-size: 0.7rem;
+  color: var(--neon-cyan);
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+.clockTime {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.clockDate {
+  font-family: var(--font-header);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── Terminal Block ── */
+.terminalBlock {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  padding: 0.9rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+
+.terminalPrompt {
+  color: var(--neon-green);
+  margin-right: 0.5rem;
+  text-shadow: 0 0 4px var(--neon-green);
+}
+
+/* ── Bio ── */
+.bioParagraph {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-prose);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.bioLabel {
+  display: block;
+  font-family: var(--font-header);
+  font-size: 0.75rem;
+  color: var(--neon-cyan);
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── Quote Terminal ── */
+.quoteTerminal {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(176, 38, 255, 0.25);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+  min-height: 90px;
+}
+
+.quotePrompt {
+  font-family: var(--font-header);
+  font-size: 0.78rem;
+  color: var(--neon-purple);
+  margin-bottom: 0.5rem;
+}
+
+.quoteText {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.quoteCursor {
+  animation: blink 0.8s step-end infinite;
+  color: var(--neon-purple);
+  font-size: 0.85rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Action Button ── */
+.actionButton {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(0, 255, 65, 0.08);
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  font-family: var(--font-header);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: all 0.2s ease-out;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.actionButton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.15), transparent);
+  transition: left 0.4s ease;
+}
+
+.actionButton:hover::after {
+  left: 100%;
+}
+
+.actionButton:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: var(--glow-green);
+  font-weight: 700;
+}
+
+/* ── Right Column: Skill Categories ── */
+.skillCategory {
+  margin-bottom: 1.8rem;
+}
+
+.categoryBox {
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1.4rem;
+  border-radius: 3px;
+}
+
+.skillCategoryTitle {
+  color: var(--text-main);
+  font-family: var(--font-header);
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.skillCategoryTitle::before {
+  content: ">";
+  color: var(--neon-green);
+}
+
+.skillGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.skillTag {
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  background: rgba(0, 240, 255, 0.05);
+  color: var(--neon-cyan);
+  font-size: 0.9rem;
+  font-family: var(--font-header);
+  letter-spacing: 0.04em;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 2px;
+}
+
+.skillLevel {
+  font-size: 0.72rem;
+  opacity: 0.6;
+}
+
+/* ── Skill Bars ── */
+.skillBarContainer {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.skillBarHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+  font-family: var(--font-header);
+  letter-spacing: 0.04em;
+}
+
+.skillBarTrack {
+  width: 100%;
+  height: 5px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skillBarFill {
+  height: 100%;
+  border-radius: 2px;
+  will-change: width;
+}
