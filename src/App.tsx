@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import ProjectList from './components/ProjectList';
 import CRTOverlay from './components/CRTOverlay';
 import SubtleBackground from './components/SubtleBackground';
+import GlitchMode from './components/GlitchMode';
 import styles from './App.module.css';
 import { portfolioData } from './data/data';
 
@@ -21,6 +22,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [isGlitched, setIsGlitched] = useState(false);
 
   // Scroll progress + active section + nav shrink
   useEffect(() => {
@@ -50,6 +52,12 @@ function App() {
   useEffect(() => {
     document.body.classList.toggle('light-theme', isLightMode);
   }, [isLightMode]);
+
+  // Glitch mode body class
+  useEffect(() => {
+    document.body.classList.toggle('glitch-mode', isGlitched);
+    return () => document.body.classList.remove('glitch-mode');
+  }, [isGlitched]);
 
   // Toast system
   const showToast = useCallback((message: string) => {
@@ -160,6 +168,10 @@ function App() {
               <span>// {new Date().getFullYear()}</span>
             </div>
           </div>
+        </div>
+        {/* Glitch Easter Egg */}
+        <div data-glitch-btn>
+          <GlitchMode isGlitched={isGlitched} onToggle={() => setIsGlitched(g => !g)} />
         </div>
       </footer>
 

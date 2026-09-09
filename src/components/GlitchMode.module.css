@@ -1,0 +1,98 @@
+/* ── GlitchMode Button Wrapper ── */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2.5rem 0 1rem;
+}
+
+/* Base button */
+.btn {
+  position: relative;
+  font-family: var(--font-header);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  padding: 0.7rem 2.2rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* ── "Don't Click" state ── */
+.dontClick {
+  background: rgba(255, 0, 60, 0.08);
+  border: 2px solid rgba(255, 0, 60, 0.75);
+  color: rgba(255, 60, 80, 1);
+  text-shadow: 0 0 6px rgba(255, 0, 60, 0.5);
+  box-shadow: 0 0 12px rgba(255, 0, 60, 0.25), inset 0 0 10px rgba(255, 0, 60, 0.05);
+  font-weight: 600;
+  animation: dontClickFlash 1.8s ease-in-out infinite;
+}
+
+.dontClick:hover {
+  border-color: rgba(255, 0, 60, 1);
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 0, 60, 0.9), 0 0 24px rgba(255, 0, 60, 0.4);
+  box-shadow: 0 0 24px rgba(255, 0, 60, 0.4), inset 0 0 16px rgba(255, 0, 60, 0.08);
+  transform: scale(1.04);
+}
+
+@keyframes dontClickFlash {
+  0%, 100% { opacity: 1;    box-shadow: 0 0 12px rgba(255, 0, 60, 0.25); }
+  50%       { opacity: 0.55; box-shadow: 0 0 4px  rgba(255, 0, 60, 0.1);  }
+}
+
+.skull {
+  margin-right: 0.5rem;
+  animation: skullBob 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes skullBob {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* ── "Reboot System" state ── */
+.reboot {
+  background: rgba(255, 0, 60, 0.12);
+  border: 2px solid rgba(255, 0, 60, 0.8);
+  color: #ff2244;
+  text-shadow: 0 0 10px #ff2244, 0 0 20px rgba(255, 0, 60, 0.6);
+  box-shadow: 0 0 25px rgba(255, 0, 60, 0.5), inset 0 0 20px rgba(255, 0, 60, 0.1);
+  /* No position-shifting animations — must stay put so user can click it */
+}
+
+.reboot:hover {
+  background: rgba(255, 0, 60, 0.25);
+  box-shadow: 0 0 40px rgba(255, 0, 60, 0.7), inset 0 0 30px rgba(255, 0, 60, 0.15);
+}
+
+/* ── Corrupt error label ── */
+.corruptLabel {
+  font-family: var(--font-header);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 0, 60, 0.7);
+  text-shadow: 0 0 6px rgba(255, 0, 60, 0.5);
+  animation: labelFlicker 0.2s step-end infinite;
+  text-align: center;
+}
+
+@keyframes labelFlicker {
+  0%   { opacity: 1; }
+  33%  { opacity: 0.3; }
+  66%  { opacity: 0.9; }
+  100% { opacity: 0.6; }
+}
